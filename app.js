@@ -7,10 +7,12 @@ const server = new WebSocket.Server({port: config.PORTTWO})
  
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
-})
-app.get('*', function(req, res){
-  res.redirect('/');
 });
+
+
+app.listen(config.PORT, '0.0.0.0', () => {
+  console.log('Сервер запущен!');
+})
 
 server.on('connection', ws => {
   ws.on('message', message => {
@@ -33,7 +35,3 @@ server.on('connection', ws => {
     }
   })
 });
- 
-app.listen(config.PORT, '0.0.0.0', () => {
-  console.log('Сервер запущен!');
-})
