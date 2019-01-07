@@ -18,6 +18,6 @@ server.on('connection', ws => {
   //ws.send('Соединение с сервером установлено!');
 });
  
-app.listen(3000, () => {
+app.listen(5000, '0.0.0.0', () => {
   console.log('Сервер запущен!');
 })
