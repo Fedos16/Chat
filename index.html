@@ -6,6 +6,7 @@
 </head>
 <body>
     <h1 id="status">Статус</h1>
+    <h3 id="colPeople">Онлайн - 3 чел.</h3>
     <ul style="list-style: none;" id="mess">
         <li style="padding-bottom: 20px; font-size: 18px; font-weight: bold;">Сообщения:</li>
     </ul>
@@ -29,10 +30,17 @@
     };
 
     var printMessage = (value) => {
-        const li = document.createElement('li');
 
-        li.textContent = value;
-        messages.appendChild(li);
+        var data = JSON.parse(value);
+
+        if (data.type == "System") {
+            document.getElementById('colPeople').textContent = "Онлайн - " + data.text + " чел.";
+        } else {
+            const li = document.createElement('li');
+
+            li.textContent = data.text;
+            messages.appendChild(li);
+        }
     }
 
     ws.onopen = () => setStatus('В сети');
@@ -46,6 +54,10 @@
             ws.send(text.value);
         }
         text.value = '';
+    }
+
+    window.beforeunload = () => {
+        ws.send('Exit');
     }
     
 
