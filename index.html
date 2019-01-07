@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="status">Статус</h1>
+    <ul style="list-style: none;" id="mess">
+        <li style="padding-bottom: 20px; font-size: 18px; font-weight: bold;">Сообщения:</li>
+    </ul>
+    <div>
+        <input type="text" id="textMessage" style="width: 200px; height: 30px; border: none; border-bottom: 1px solid lightgray; outline:none; margin-left: 40px; margin-top: 30px;" placeholder="Мое сообщение">
+        <button id="submitMessage" style="width: 100px; height: 30px; border: none; background-color:rgb(32, 115, 194); outline: none; color: white;">Отправить</button>
+    </div>
+    
+</body>
+</html>
+
+<script>
+    var sta = document.getElementById('status');
+    var messages = document.getElementById('mess');
+
+    const ws = new WebSocket('ws://localhost:3001');
+
+
+    var setStatus = (value) => {
+        sta.textContent = value;
+    };
+
+    var printMessage = (value) => {
+        const li = document.createElement('li');
+
+        li.textContent = value;
+        messages.appendChild(li);
+    }
+
+    ws.onopen = () => setStatus('В сети');
+    ws.onclose = () => setStatus('Не в сети');
+
+    ws.onmessage = res => printMessage(res.data);
+
+    submitMessage.onclick = e => {
+        var text = document.getElementById('textMessage');
+        if (text.value != '') {
+            ws.send(text.value);
+        }
+        text.value = '';
+    }
+    
+
+</script>
