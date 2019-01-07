@@ -6,5 +6,6 @@ dotenv.config({ path: root('.env') });
 
 module.exports = {
     PORT: process.env.PORT || 3000,
+    PORTTWO: process.env.PORTTWO || 3001,
     IS_PRODUCTION: process.env.NODE_ENV === 'production'
   };

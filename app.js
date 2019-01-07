@@ -1,9 +1,9 @@
 var express = require('express');
 var WebSocket = require("ws");
-const server = new WebSocket.Server({port: 3001})
-var app = express();
-
 const config = require('./config');
+
+var app = express();
+const server = new WebSocket.Server({port: config.PORTTWO})
  
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
